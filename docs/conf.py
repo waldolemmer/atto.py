@@ -87,7 +87,7 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = "attopy"
+project = "atto.py"
 copyright = "2025, Waldo Lemmer"
 
 # The version info for the project you're documenting, acts as replacement for
@@ -246,7 +246,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ("index", "user_guide.tex", "attopy Documentation", "Waldo Lemmer", "manual")
+    ("index", "user_guide.tex", "atto.py Documentation", "Waldo Lemmer", "manual")
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

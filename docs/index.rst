@@ -1,8 +1,8 @@
-======
-attopy
-======
+=======
+atto.py
+=======
 
-This is the documentation of **attopy**.
+This is the documentation of **atto.py**.
 
 Contents
 ========
