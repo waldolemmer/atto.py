@@ -78,6 +78,11 @@ Example output:
     DEAD...     2500000000
     ... 97 more lines ...
 
+Installation
+------------
+
+Simply run ``pip install atto.py``.
+
 What's missing?
 ---------------
 
