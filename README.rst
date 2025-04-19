@@ -29,9 +29,9 @@
 
 |
 
-======
-attopy
-======
+=======
+atto.py
+=======
 
 
     A Python API wrapper for the Atto node API.
