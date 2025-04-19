@@ -53,16 +53,18 @@ Typical usage example:
 
 .. code-block:: python
 
-    ADDRESS = '<your address>'.removeprefix('atto://')
-
+    from attopy import AttoClient, address_to_key
+    
+    ADDRESS = '<your_address>'.removeprefix('atto://')
+    
     with AttoClient() as node:
         public_key = address_to_key(ADDRESS)
         account = node.get_account(public_key)
-        print(f'balance: {account.amount}')
-
+        print(f'balance: {account.balance}')
+    
         # print first 100 transactions
         print('Hash\\tAmount')
-        for entry in node.entries_stream(account, from_height=1, to_height=100, timeout=None):
+        for entry in node.entries_stream(account, from_height=1, to_height=10, timeout=None):
             print(f'{entry.hash_[0:3]}...\\t{entry.amount}')
 
 Example output:
