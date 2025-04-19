@@ -65,7 +65,7 @@ Typical usage example:
         # print first 100 transactions
         print('Hash\\tAmount')
         for entry in node.entries_stream(account, from_height=1, to_height=10, timeout=None):
-            print(f'{entry.hash_[0:3]}...\\t{entry.amount}')
+            print(f'{entry.hash_[0:4]}...\\t{entry.amount}')
 
 Example output:
 
