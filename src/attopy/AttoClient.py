@@ -53,9 +53,7 @@ class AttoClient:
     Attributes:
         base_url: the node API's base URL
     """
-    def __init__(self,
-                 base_url='https://gatekeeper.live.application.atto.cash',
-                 **kwargs):
+    def __init__(self, base_url='https://h.tail006b6.ts.net/api', **kwargs):
         """Create a synchronous client with a connection to a node.
 
         Args:
