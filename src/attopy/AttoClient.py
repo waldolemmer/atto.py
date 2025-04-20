@@ -78,17 +78,19 @@ class AttoClient:
 #    def get_transaction(self, hash_):
 #        return Transaction(self._get_json(f'/transactions/{hash_}'))
 
-    def get_instants(self, instant=datetime.datetime.now()):
+    def get_instants(self, instant=None):
         """Return time information about the client and the server.
 
         Args:
-            instant: A datetime object
+            instant: A datetime object. Defaults to datetime.now().
 
         Returns:
             A dataclass containing the date and time of the client
             (client_instant), the date and time of the server (server_instant)
             and the time delta between the client and the server (difference).
         """
+        if not instant:
+            instant = datetime.datetime.now()
         instant = instant.astimezone(datetime.UTC).isoformat()
 
         @dataclasses.dataclass
