@@ -19,8 +19,8 @@ Typical usage example::
                                                 timeout=None):
             print(f'{entry.hash_[0:3]}...\\t{entry.amount}')
 
-Although this documentation should be sufficient, an API reference can be found
-at https://atto.cash/api/node.
+Although this documentation should be sufficient, an `API reference
+<https://atto.cash/api/node>`_ exists.
 """
 """This file is part of Atto.py.
 

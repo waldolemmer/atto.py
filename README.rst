@@ -34,14 +34,15 @@ atto.py
 =======
 
 
-    A Python API wrapper for the Atto node API.
+    A Python API wrapper for the `Atto`_ node API.
 
 
 An instance of `AttoClient()` represents a connection to an Atto node.
 Communication with the node happens through `AttoClient()`'s members.
 
-The methods wrap the information from API responses in the form of
-Python builtins and classes in this module, such as:
+The methods wrap the information from `API responses
+<https://atto.cash/api/node>`_ in the form of Python builtins and classes in
+this module, such as:
 
 * Account
 * Entry
@@ -78,6 +79,8 @@ Example output:
     DEAD...     2500000000
     ... 97 more lines ...
 
+.. _Atto: https://atto.cash/
+
 Installation
 ------------
 
@@ -103,3 +106,13 @@ query nodes, and can't post transactions. This will change once a testing
 framework has been set up.
 
 All classes and members should be fully documented soon.
+
+Need help?
+----------
+
+I'm always available in the `Atto Discord server`_. Feel free to get in touch.
+
+For some insight into what inspired me to write this library, see `this blog
+post <https://atto.cash/blog/writing-python-api-wrapper>`_.
+
+.. _Atto Discord server: https://discord.gg/TfQGzEdzKp
