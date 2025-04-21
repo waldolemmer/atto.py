@@ -112,4 +112,7 @@ Need help?
 
 I'm always available in the `Atto Discord server`_. Feel free to get in touch.
 
+For some insight into what inspired me to write this library, see `this blog
+post <https://atto.cash/blog/writing-python-api-wrapper>`_.
+
 .. _Atto Discord server: https://discord.gg/TfQGzEdzKp
