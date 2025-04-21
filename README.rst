@@ -40,8 +40,9 @@ atto.py
 An instance of `AttoClient()` represents a connection to an Atto node.
 Communication with the node happens through `AttoClient()`'s members.
 
-The methods wrap the information from API responses in the form of
-Python builtins and classes in this module, such as:
+The methods wrap the information from `API responses
+<https://atto.cash/api/node>`_ in the form of Python builtins and classes in
+this module, such as:
 
 * Account
 * Entry
