@@ -29,6 +29,8 @@ class Block:
         self.type = _str_to_block_type(dict_['type'])
         self.height = dict_.get('height')
         self.previous = dict_.get('previous')
-        # TODO: not present (tested /transactions/{hash}/stream
-        #self.representative_algorithm = dict_['representativeAlgorithm']
-        #self.representative_public_key = dict_['representativePublicKey']
+        self.representative_algorithm = dict_.get('representativeAlgorithm', None)
+        if self.representative_algorithm is not None:
+            self.representative_algorithm = _str_to_algorithm(
+                    self.representative_algorithm)
+        self.representative_public_key = dict_.get('representativePublicKey', None)
