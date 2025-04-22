@@ -30,5 +30,4 @@ class Entry:
         self.previous_balance = _raw_to_atto(dict_['previousBalance'])
         self.balance = _raw_to_atto(dict_['balance'])
         self.amount = self.balance - self.previous_balance
-        # TODO: not a POSIX timestamp?
-        #self.timestamp = datetime.datetime.fromtimestamp(dict_['timestamp'])
+        self.timestamp = _timestamp_to_datetime(dict_['timestamp'])
