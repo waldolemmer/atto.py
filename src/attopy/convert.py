@@ -43,3 +43,27 @@ def address_to_key(address_without_protocol):
     key_bytes_hex = (format(byte, '02X') for byte in decoded[1:-5])
 
     return ''.join(key_bytes_hex)
+
+def _timestamp_to_datetime(timestamp):
+    return datetime.datetime.fromtimestamp(timestamp/1000)
+
+def _raw_to_atto(amount):
+    return amount / 1_000_000_000
+
+def _str_to_network(str_):
+    try:
+        return Network(str_)
+    except ValueError:
+        raise NotImplementedError(f'{str_} is not a known network')
+
+def _str_to_algorithm(str_):
+    try:
+        return Algorithm(str_)
+    except ValueError:
+        raise NotImplementedError(f'{str_} is not a known algorithm')
+
+def _str_to_block_type(str_):
+    try:
+        return BlockType(str_)
+    except ValueError:
+        raise NotImplementedError(f'{str_} is not a known block type')
