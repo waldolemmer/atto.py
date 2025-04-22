@@ -118,7 +118,7 @@ class AttoClient:
 
 #    TODO: not supported by gatekeeper node; can't test
 #    def latest_accounts_stream(self, public_key, *args, **kwargs):
-        public_key = _try_account_to_key(public_key)
+#        public_key = _try_account_to_key(public_key)
 #        with self._client.stream('get',
 #                                 f'accounts/stream',
 #                                 *args,
