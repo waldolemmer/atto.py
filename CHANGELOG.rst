@@ -2,6 +2,25 @@
 Changelog
 =========
 
+Version 0.1.3
+=============
+
+feat: convert fields
+--------------------
+
+* refactor: move address_to_key to convert.py
+* refactor: add field conversion functions
+* feat: return some fields as enums
+
+  The following fields are now returned as enums:
+  
+  * network
+  * algorithm
+  * type/block_type
+* refactor: fix typo
+* feat: add representative fields to Block
+* feat: return timestamps as datetime objects
+
 Version 0.1.2
 =============
 
