@@ -1,8 +1,8 @@
 """A Python interface for the Atto node API.
 
 This module includes the synchronous client AttoClient (for interacting with
-the API) as well as utility functions that may be needed during this
-interaction.
+the API) as well as utility classes and functions that may be needed during
+this interaction.
 
 Typical usage example::
 
@@ -52,28 +52,4 @@ finally:
     del version, PackageNotFoundError
 
 from .AttoClient import *
-import base64
-
-def address_to_key(address_without_protocol):
-    """Convert an address into a public key.
-
-    Addresses are base32-encoded strings that start with atto://. Public keys
-    are the decoded form, with the version and checksum removed.
-
-    Client API functions accept public keys, not addresses. Similarly, accounts
-    returned from API functions contain public keys, not addresses.
-
-    Args:
-        address: An address (which typically starts with atto://), with atto://
-            removed. The protocol (atto://) can be removed from an address using
-            ``address.removeprefix('atto://')``.
-    Return:
-        A public key in the form of a binary string that can be passed to the
-        Atto.py client API functions.
-    """
-    decoded = base64.b32decode(address_without_protocol.upper() + '===')
-
-    # The first byte is the version. The last five bytes are the checksum.
-    key_bytes_hex = (format(byte, '02X') for byte in decoded[1:-5])
-
-    return ''.join(key_bytes_hex)
+from .convert import *

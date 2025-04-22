@@ -14,19 +14,23 @@ PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>. 
 """
+from .convert import (_str_to_algorithm, _timestamp_to_datetime,
+                      _str_to_network, _raw_to_atto, _str_to_block_type)
 
 class Block:
     # TODO: docstring
     def __init__(self, dict_):
         self.public_key = dict_['publicKey']
         self.version = dict_['version']
-        self.algorithm = dict_['algorithm']
-        self.timestamp = dict_['timestamp']
-        self.network = dict_['network']
-        self.balance = dict_['balance']
-        self.type = dict_['type']
+        self.algorithm = _str_to_algorithm(dict_['algorithm'])
+        self.timestamp = _timestamp_to_datetime(dict_['timestamp'])
+        self.network = _str_to_network(dict_['network'])
+        self.balance = _raw_to_atto(dict_['balance'])
+        self.type = _str_to_block_type(dict_['type'])
         self.height = dict_.get('height')
         self.previous = dict_.get('previous')
-        # TODO: not present (tested /transactions/{hash}/stream
-        #self.representative_algorithm = dict_['representativeAlgorithm']
-        #self.representative_public_key = dict_['representativePublicKey']
+        self.representative_algorithm = dict_.get('representativeAlgorithm', None)
+        if self.representative_algorithm is not None:
+            self.representative_algorithm = _str_to_algorithm(
+                    self.representative_algorithm)
+        self.representative_public_key = dict_.get('representativePublicKey', None)

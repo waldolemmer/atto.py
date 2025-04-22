@@ -14,16 +14,20 @@ PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>. 
 """
+from .convert import (_str_to_network, _str_to_algorithm, _raw_to_atto,
+                      _timestamp_to_datetime)
 class Account:
     # TODO: docstring
     def __init__(self, dict_):
         self.public_key = dict_['publicKey']
-        self.network = dict_['network']
+        self.network = _str_to_network(dict_['network'])
         self.version = dict_['version']
-        self.algorithm = dict_['algorithm']
+        self.algorithm = _str_to_algorithm(dict_['algorithm'])
         self.height = dict_['height']
-        self.balance = dict_['balance']
+        self.balance = _raw_to_atto(dict_['balance'])
         self.last_transaction_hash = dict_['lastTransactionHash']
-        self.last_transaction_timestamp = dict_['lastTransactionTimestamp']
-        self.representative_algorithm = dict_['representativeAlgorithm']
+        self.last_transaction_timestamp = _timestamp_to_datetime(
+                dict_['lastTransactionTimestamp'])
+        self.representative_algorithm = _str_to_algorithm(
+                dict_['representativeAlgorithm'])
         self.representative_public_key = dict_['representativePublicKey']
