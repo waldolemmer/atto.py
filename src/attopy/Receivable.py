@@ -15,16 +15,16 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>. 
 """
 import datetime
+from .convert import _str_to_algorithm, _timestamp_to_datetime, _raw_to_atto
 
 class Receivable:
     # TODO: docstring
     def __init__(self, dict_):
         self.hash_ = dict_['hash']
         self.version = dict_['version']
-        self.algorithm = dict_['algorithm']
+        self.algorithm = _str_to_algorithm(dict_['algorithm'])
         self.public_key = dict_['publicKey']
-        # TODO: not a POSIX timestamp?
-        #self.timestamp = datetime.datetime.fromtimestamp(dict_['timestamp'])
-        self.receiver_algorithm = dict_['receiverAlgorithm']
+        self.timestamp = _timestamp_to_datetime(dict_['timestamp'])
+        self.receiver_algorithm = _str_to_algorithm(dict_['receiverAlgorithm'])
         self.receiver_public_key = dict_['receiverPublicKey']
-        self.amount = dict_['amount']
+        self.amount = _raw_to_atto(dict_['amount'])
