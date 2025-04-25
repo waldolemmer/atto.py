@@ -36,6 +36,9 @@ atto.py
 
     A Python API wrapper for the `Atto`_ node API.
 
+Atto.py provides a Pythonic interface for communicating with Atto nodes,
+allowing developers to interact with the account-chain ledgers without dealing
+with low-level API details.
 
 An instance of `AttoClient()` represents a connection to an Atto node.
 Communication with the node happens through `AttoClient()`'s members.
