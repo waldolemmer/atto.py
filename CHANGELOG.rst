@@ -2,6 +2,13 @@
 Changelog
 =========
 
+Version 0.2.0
+=============
+
+* feat: use Decimal for amounts
+
+  Using Decimal avoids floating-point errors.
+
 Version 0.1.3
 =============
 

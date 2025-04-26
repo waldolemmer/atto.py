@@ -16,7 +16,14 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 """
 import base64
 import datetime
+import decimal
 from .field_types import *
+
+decimal.setcontext(decimal.BasicContext) # enable most traps
+_context = decimal.getcontext()
+for signal in (decimal.Inexact, decimal.Rounded, decimal.Subnormal):
+    _context.traps[signal] = True # enable the remaining traps
+_context.prec = 20 # 99,999,999,999.999999999
 
 __all__ = ['address_to_key']
 
@@ -47,8 +54,8 @@ def address_to_key(address_without_protocol):
 def _timestamp_to_datetime(timestamp):
     return datetime.datetime.fromtimestamp(timestamp/1000)
 
-def _raw_to_atto(amount):
-    return amount / 1_000_000_000
+def _raw_to_atto(amount) -> decimal.Decimal:
+    return amount / decimal.Decimal(1_000_000_000)
 
 def _str_to_network(str_):
     try:
