@@ -2,6 +2,11 @@
 Changelog
 =========
 
+Version 0.3.0
+=============
+
+* feat: rename {from,to}_height to {from\_,to}
+
 Version 0.2.0
 =============
 
