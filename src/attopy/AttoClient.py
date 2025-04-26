@@ -17,6 +17,7 @@ from .Account import Account
 from .Transaction import Transaction
 from .Receivable import Receivable
 from .Entry import Entry
+from .convert import address_to_key
 import httpx
 import datetime
 import dataclasses
@@ -24,10 +25,17 @@ import json
 
 __all__ = ['AttoClient']
 
-def _try_account_to_key(public_key):
-    if type(public_key) == Account:
-        public_key = public_key.public_key
-    return public_key
+def _account_to_key(account):
+    if type(account) == Account:
+        return account.public_key
+
+    if len(account) == 64:
+        return account
+
+    if account.startswith('atto://'):
+        account = account.removeprefix('atto://')
+
+    return address_to_key(account)
 
 class AttoClient:
     """A synchronous connection to an Atto Node.
@@ -63,14 +71,16 @@ class AttoClient:
         self.base_url = base_url
         self._client = httpx.Client(base_url=base_url, **kwargs)
     
-    def get_account(self, public_key):
+    def get_account(self, account):
         """Return an up-to-date Account object
 
         Args:
-            public_key: an Account object, or a bytestring derived from the
-                account name, with the version and checksum omitted
+            account: an Account object, an address (with or without the
+            atto:// protocol prefix) or a bytestring derived from the account
+            name, with the version and checksum omitted (using
+            address_to_key())
         """
-        public_key = _try_account_to_key(public_key)
+        public_key = _account_to_key(account)
 
         return Account(self._get_json(f'/accounts/{public_key}'))
 
@@ -108,9 +118,9 @@ class AttoClient:
                         server_instant=server_instant,
                         difference=difference)
 
-    def account_stream(self, public_key, *args, **kwargs):
+    def account_stream(self, account, *args, **kwargs):
         # TODO: docstring
-        public_key = _try_account_to_key(public_key)
+        public_key = _account_to_key(account)
         yield from self._stream(f'accounts/{public_key}/stream',
                                 Account,
                                 *args,
@@ -118,7 +128,7 @@ class AttoClient:
 
 #    TODO: not supported by gatekeeper node; can't test
 #    def latest_accounts_stream(self, public_key, *args, **kwargs):
-#        public_key = _try_account_to_key(public_key)
+#        public_key = _account_to_key(public_key)
 #        with self._client.stream('get',
 #                                 f'accounts/stream',
 #                                 *args,
@@ -126,9 +136,9 @@ class AttoClient:
 #            for line in stream.iter_lines():
 #                yield Account(json.loads(line))
     
-    def receivables_stream(self, public_key, min_amount=1, *args, **kwargs):
+    def receivables_stream(self, account, min_amount=1, *args, **kwargs):
         # TODO: docstring
-        public_key = _try_account_to_key(public_key)
+        public_key = _account_to_key(account)
         yield from self._stream(f'accounts/{public_key}/receivables/stream',
                                 Receivable,
                                 *args,
@@ -142,13 +152,13 @@ class AttoClient:
                                 **kwargs)
 
     def entries_stream(self,
-                       public_key,
+                       account,
                        from_,
                        to,
                        *args,
                        **kwargs):
         # TODO: docstring
-        public_key = _try_account_to_key(public_key)
+        public_key = _account_to_key(account)
         yield from self._stream(f'accounts/{public_key}/entries/stream',
                                 Entry,
                                 params={'fromHeight': from_,
@@ -171,13 +181,13 @@ class AttoClient:
                                 **kwargs)
 
     def transactions_stream(self,
-                            public_key,
+                            account,
                             from_,
                             to,
                             *args,
                             **kwargs):
         # TODO: docstring
-        public_key = _try_account_to_key(public_key)
+        public_key = _account_to_key(account)
         yield from self._stream(f'accounts/{public_key}/transactions/stream',
                                 Transaction,
                                 params={'fromHeight': from_,
