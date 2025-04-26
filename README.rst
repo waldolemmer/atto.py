@@ -57,13 +57,12 @@ Typical usage example:
 
 .. code-block:: python
 
-    from attopy import AttoClient, address_to_key
+    from attopy import AttoClient
     
-    ADDRESS = '<your_address>'.removeprefix('atto://')
+    ADDRESS = '<your_address>'
     
     with AttoClient() as node:
-        public_key = address_to_key(ADDRESS)
-        account = node.get_account(public_key)
+        account = node.get_account(ADDRESS)
         print(f'balance: {account.balance}')
     
         # print first 100 transactions

@@ -6,10 +6,10 @@ this interaction.
 
 Typical usage example::
 
-    ADDRESS = 'ad7z3jdoeqwayzpaiafizb5su6zc2fyvbeg2wq5t3yfj3q5iuprx23z437juk'
+    ADDRESS = 'atto://ad7z3jdoeqwayzpaiafizb5su6zc2fyvbeg2wq5t3yfj3q5iuprx23z437juk'
 
     with AttoClient() as atto_client:
-        account = atto_client.get_account(address_to_key(ADDRESS))
+        account = atto_client.get_account(ADDRESS)
 
         # print first 100 transactions
         print('Hash\\tAmount')
