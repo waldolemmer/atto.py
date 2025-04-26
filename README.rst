@@ -66,9 +66,9 @@ Typical usage example:
         print(f'balance: {account.balance}')
     
         # print first 100 transactions
-        print('Hash\\tAmount')
+        print('Hash\tAmount')
         for entry in node.entries_stream(account, from_=1, to=10, timeout=None):
-            print(f'{entry.hash_[0:4]}...\\t{entry.amount}')
+            print(f'{entry.hash_[0:4]}...\t{entry.amount}')
 
 Example output:
 
@@ -79,7 +79,7 @@ Example output:
     A5DF...     10000000
     BEEF...     49000000000
     DEAD...     2500000000
-    ... 97 more lines ...
+    ... 7 more lines ...
 
 .. _Atto: https://atto.cash/
 
