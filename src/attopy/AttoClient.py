@@ -45,8 +45,8 @@ class AttoClient:
             # print first 100 transactions
             print('Hash\\tAmount')
             for entry in atto_client.entries_stream(account,
-                                                    from_height=1,
-                                                    to_height=100,
+                                                    from_=1,
+                                                    to=100,
                                                     timeout=None):
                 print(f'{entry.hash_[0:3]}...\\t{entry.amount}')
 
@@ -143,16 +143,16 @@ class AttoClient:
 
     def entries_stream(self,
                        public_key,
-                       from_height,
-                       to_height,
+                       from_,
+                       to,
                        *args,
                        **kwargs):
         # TODO: docstring
         public_key = _try_account_to_key(public_key)
         yield from self._stream(f'accounts/{public_key}/entries/stream',
                                 Entry,
-                                params={'fromHeight': from_height,
-                                        'toHeight': to_height},
+                                params={'fromHeight': from_,
+                                        'toHeight': to},
                                 *args,
                                 **kwargs)
 
@@ -172,16 +172,16 @@ class AttoClient:
 
     def transactions_stream(self,
                             public_key,
-                            from_height,
-                            to_height,
+                            from_,
+                            to,
                             *args,
                             **kwargs):
         # TODO: docstring
         public_key = _try_account_to_key(public_key)
         yield from self._stream(f'accounts/{public_key}/transactions/stream',
                                 Transaction,
-                                params={'fromHeight': from_height,
-                                        'toHeight': to_height},
+                                params={'fromHeight': from_,
+                                        'toHeight': to},
                                 *args,
                                 **kwargs)
 
