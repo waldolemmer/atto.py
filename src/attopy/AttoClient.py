@@ -166,8 +166,11 @@ class AttoClient:
                                 *args,
                                 **kwargs)
 
-    def latest_entries_stream(self, *args, **kwargs):
+    def entries(self, account=None, *args, stream=True, **kwargs):
         # TODO: docstring
+        if not stream:
+            raise ValueError(f'{stream=}')
+
         yield from self._stream(f'accounts/entries/stream',
                                 Entry,
                                 *args,
@@ -195,8 +198,11 @@ class AttoClient:
                                 *args,
                                 **kwargs)
 
-    def latest_transactions_stream(self, *args, **kwargs):
+    def transactions(self, account=None, *args, stream=True, **kwargs):
         # TODO: docstring
+        if not stream:
+            raise ValueError(f'{stream=}')
+        
         yield from self._stream(f'transactions/stream',
                                 Transaction,
                                 *args,
