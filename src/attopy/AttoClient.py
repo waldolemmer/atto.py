@@ -154,28 +154,25 @@ class AttoClient:
                                 *args,
                                 **kwargs)
 
-    def entries_stream(self,
-                       account,
-                       from_,
-                       to,
-                       *args,
-                       **kwargs):
-        # TODO: docstring
-        public_key = _account_to_key(account)
-        yield from self._stream(f'accounts/{public_key}/entries/stream',
-                                Entry,
-                                params={'fromHeight': from_,
-                                        'toHeight': to},
-                                *args,
-                                **kwargs)
-
-    def entries(self, account=None, *args, stream=True, **kwargs):
+    def entries(self, account=None, *args, from_, to, stream=True, **kwargs):
         # TODO: docstring
         if not stream:
             raise ValueError(f'{stream=}')
 
-        yield from self._stream(f'accounts/entries/stream',
+        if account is None:
+            endpoint = 'accounts/entries/stream'
+            params = {}
+            if from_ is not None:
+                raise ValueError(f'{account=}, {from_=}')
+            if to is not None:
+                raise ValueError(f'{account=}, {to=}')
+        else:
+            endpoint = f'accounts/{_account_to_key(account)}/entries/stream'
+            params = {'fromHeight': from_, 'toHeight': to}
+
+        yield from self._stream(endpoint,
                                 Entry,
+                                params=params,
                                 *args,
                                 **kwargs)
 
