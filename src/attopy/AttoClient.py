@@ -82,7 +82,13 @@ class AttoClient:
         """
         public_key = _account_to_key(account)
 
-        return Account(self._get_json(f'/accounts/{public_key}'))
+        if not stream:
+            return Account(self._get_json(f'/accounts/{public_key}'))
+
+        yield from self._stream(f'accounts/{public_key}/stream',
+                                Account,
+                                *args,
+                                **kwargs)
 
 #    TODO: not supported by gatekeeper node; can't test
 #    def get_transaction(self, hash_):
@@ -117,14 +123,6 @@ class AttoClient:
         return Instants(client_instant=client_instant,
                         server_instant=server_instant,
                         difference=difference)
-
-    def account_stream(self, account, *args, **kwargs):
-        # TODO: docstring
-        public_key = _account_to_key(account)
-        yield from self._stream(f'accounts/{public_key}/stream',
-                                Account,
-                                *args,
-                                **kwargs)
 
 #    TODO: not supported by gatekeeper node; can't test
 #    def latest_accounts_stream(self, public_key, *args, **kwargs):
