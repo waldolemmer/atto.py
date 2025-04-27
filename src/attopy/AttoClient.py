@@ -134,8 +134,11 @@ class AttoClient:
 #            for line in stream.iter_lines():
 #                yield Account(json.loads(line))
     
-    def receivables_stream(self, account, min_amount=1, *args, **kwargs):
+    def receivables(self, account, *args, min_amount=1, stream=True, **kwargs):
         # TODO: docstring
+        if not stream:
+            raise ValueError(f'{stream=}')
+
         public_key = _account_to_key(account)
         yield from self._stream(f'accounts/{public_key}/receivables/stream',
                                 Receivable,
