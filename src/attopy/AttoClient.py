@@ -142,8 +142,13 @@ class AttoClient:
                                 *args,
                                 **kwargs)
 
-    def entry_stream(self, hash_, *args, **kwargs):
+    # stream=False because "entry" is singular, and singular methods aren't
+    # streamed by default
+    def entry(self, hash_, *args, stream=False, **kwargs):
         # TODO: docstring
+        if not stream:
+            raise ValueError(f'{stream=}')
+
         yield from self._stream(f'accounts/entries/{hash_}/stream',
                                 Entry,
                                 *args,
