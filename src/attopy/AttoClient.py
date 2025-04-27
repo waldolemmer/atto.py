@@ -71,7 +71,7 @@ class AttoClient:
         self.base_url = base_url
         self._client = httpx.Client(base_url=base_url, **kwargs)
     
-    def get_account(self, account):
+    def account(self, account, stream=False):
         """Return an up-to-date Account object
 
         Args:
