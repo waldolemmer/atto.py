@@ -88,7 +88,7 @@ class AttoClient:
 #    def get_transaction(self, hash_):
 #        return Transaction(self._get_json(f'/transactions/{hash_}'))
 
-    def get_instants(self, instant=None):
+    def instants(self, instant=None):
         """Return time information about the client and the server.
 
         Args:
