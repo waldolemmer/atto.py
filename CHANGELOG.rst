@@ -2,6 +2,19 @@
 Changelog
 =========
 
+Version 0.5.0
+=============
+
+* feat: rename get_instants to instants
+* feat: rename latext_x_stream to x with unused account param
+* feat: rename get_account to account
+* feat: move account_stream to account(stream=True)
+* feat: rename entry_stream to entry
+* feat: move transaction_stream to transaction
+* feat: move entries_stream to entries
+* feat: rename receivables_stream to receivables
+* feat: move transactions_stream to transactions
+
 Version 0.4.0
 =============
 
