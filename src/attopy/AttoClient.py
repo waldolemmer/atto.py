@@ -157,7 +157,8 @@ class AttoClient:
                                 *args,
                                 **kwargs)
 
-    def entries(self, account=None, *args, from_, to, stream=True, **kwargs):
+    def entries(self, account=None, *args, from_=None, to=None, stream=True,
+                **kwargs):
         # TODO: docstring
         if not stream:
             raise ValueError(f'{stream=}')
@@ -191,28 +192,23 @@ class AttoClient:
                                 *args,
                                 **kwargs)
 
-    def transactions_stream(self,
-                            account,
-                            from_,
-                            to,
-                            *args,
-                            **kwargs):
-        # TODO: docstring
-        public_key = _account_to_key(account)
-        yield from self._stream(f'accounts/{public_key}/transactions/stream',
-                                Transaction,
-                                params={'fromHeight': from_,
-                                        'toHeight': to},
-                                *args,
-                                **kwargs)
-
-    def transactions(self, account=None, *args, stream=True, **kwargs):
+    def transactions(self, account=None, *args, from_=None, to=None,
+                     stream=True, **kwargs):
         # TODO: docstring
         if not stream:
             raise ValueError(f'{stream=}')
         
-        yield from self._stream(f'transactions/stream',
+        if account is None:
+            endpoint = 'transactions/stream'
+            params = {}
+        else:
+            public_key = _account_to_key(account)
+            endpoint = f'accounts/{public_key}/transactions/stream'
+            params = {'fromHeight': from_, 'toHeight': to}
+
+        yield from self._stream(endpoint,
                                 Transaction,
+                                params=params,
                                 *args,
                                 **kwargs)
 
