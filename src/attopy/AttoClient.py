@@ -70,25 +70,8 @@ class AttoClient:
         """
         self.base_url = base_url
         self._client = httpx.Client(base_url=base_url, **kwargs)
-    
-    def get_account(self, account):
-        """Return an up-to-date Account object
 
-        Args:
-            account: an Account object, an address (with or without the
-            atto:// protocol prefix) or a bytestring derived from the account
-            name, with the version and checksum omitted (using
-            address_to_key())
-        """
-        public_key = _account_to_key(account)
-
-        return Account(self._get_json(f'/accounts/{public_key}'))
-
-#    TODO: not supported by gatekeeper node; can't test
-#    def get_transaction(self, hash_):
-#        return Transaction(self._get_json(f'/transactions/{hash_}'))
-
-    def get_instants(self, instant=None):
+    def instants(self, instant=None):
         """Return time information about the client and the server.
 
         Args:
@@ -117,14 +100,53 @@ class AttoClient:
         return Instants(client_instant=client_instant,
                         server_instant=server_instant,
                         difference=difference)
+    
+    def account(self, account, stream=False):
+        """Return an up-to-date Account object
 
-    def account_stream(self, account, *args, **kwargs):
-        # TODO: docstring
+        Args:
+            account: an Account object, an address (with or without the
+            atto:// protocol prefix) or a bytestring derived from the account
+            name, with the version and checksum omitted (using
+            address_to_key())
+        """
         public_key = _account_to_key(account)
+
+        if not stream:
+            return Account(self._get_json(f'/accounts/{public_key}'))
+
         yield from self._stream(f'accounts/{public_key}/stream',
                                 Account,
                                 *args,
                                 **kwargs)
+
+    # stream=False because "entry" is singular, and singular methods aren't
+    # streamed by default
+    def entry(self, hash_, *args, stream=False, **kwargs):
+        # TODO: docstring
+        if not stream:
+            raise ValueError(f'{stream=}')
+
+        yield from self._stream(f'accounts/entries/{hash_}/stream',
+                                Entry,
+                                *args,
+                                **kwargs)
+
+    # stream=False because "transaction" is singular, and singular methods aren't
+    # streamed by default
+    def transaction(self, hash_, *args, stream=False, **kwargs):
+        # TODO: docstring
+        if not stream:
+            raise ValueError(f'{stream=}')
+
+        yield from self._stream(f'transactions/{hash_}/stream',
+                                Transaction,
+                                *args,
+                                **kwargs)
+
+#    TODO: not supported by gatekeeper node; can't test
+#    def get_transaction(self, hash_):
+#        return Transaction(self._get_json(f'/transactions/{hash_}'))
 
 #    TODO: not supported by gatekeeper node; can't test
 #    def latest_accounts_stream(self, public_key, *args, **kwargs):
@@ -135,70 +157,57 @@ class AttoClient:
 #                                 **kwargs) as stream:
 #            for line in stream.iter_lines():
 #                yield Account(json.loads(line))
-    
-    def receivables_stream(self, account, min_amount=1, *args, **kwargs):
+
+    def receivables(self, account, *args, min_amount=1, stream=True, **kwargs):
         # TODO: docstring
+        if not stream:
+            raise ValueError(f'{stream=}')
+
         public_key = _account_to_key(account)
         yield from self._stream(f'accounts/{public_key}/receivables/stream',
                                 Receivable,
                                 *args,
                                 **kwargs)
-
-    def entry_stream(self, hash_, *args, **kwargs):
+    def entries(self, account=None, *args, from_=None, to=None, stream=True,
+                **kwargs):
         # TODO: docstring
-        yield from self._stream(f'accounts/entries/{hash_}/stream',
+        if not stream:
+            raise ValueError(f'{stream=}')
+
+        if account is None:
+            endpoint = 'accounts/entries/stream'
+            params = {}
+            if from_ is not None:
+                raise ValueError(f'{account=}, {from_=}')
+            if to is not None:
+                raise ValueError(f'{account=}, {to=}')
+        else:
+            endpoint = f'accounts/{_account_to_key(account)}/entries/stream'
+            params = {'fromHeight': from_, 'toHeight': to}
+
+        yield from self._stream(endpoint,
                                 Entry,
+                                params=params,
                                 *args,
                                 **kwargs)
 
-    def entries_stream(self,
-                       account,
-                       from_,
-                       to,
-                       *args,
-                       **kwargs):
+    def transactions(self, account=None, *args, from_=None, to=None,
+                     stream=True, **kwargs):
         # TODO: docstring
-        public_key = _account_to_key(account)
-        yield from self._stream(f'accounts/{public_key}/entries/stream',
-                                Entry,
-                                params={'fromHeight': from_,
-                                        'toHeight': to},
-                                *args,
-                                **kwargs)
+        if not stream:
+            raise ValueError(f'{stream=}')
+        
+        if account is None:
+            endpoint = 'transactions/stream'
+            params = {}
+        else:
+            public_key = _account_to_key(account)
+            endpoint = f'accounts/{public_key}/transactions/stream'
+            params = {'fromHeight': from_, 'toHeight': to}
 
-    def latest_entries_stream(self, *args, **kwargs):
-        # TODO: docstring
-        yield from self._stream(f'accounts/entries/stream',
-                                Entry,
-                                *args,
-                                **kwargs)
-
-    def transaction_stream(self, hash_, *args, **kwargs):
-        # TODO: docstring
-        yield from self._stream(f'transactions/{hash_}/stream',
+        yield from self._stream(endpoint,
                                 Transaction,
-                                *args,
-                                **kwargs)
-
-    def transactions_stream(self,
-                            account,
-                            from_,
-                            to,
-                            *args,
-                            **kwargs):
-        # TODO: docstring
-        public_key = _account_to_key(account)
-        yield from self._stream(f'accounts/{public_key}/transactions/stream',
-                                Transaction,
-                                params={'fromHeight': from_,
-                                        'toHeight': to},
-                                *args,
-                                **kwargs)
-
-    def latest_transactions_stream(self, *args, **kwargs):
-        # TODO: docstring
-        yield from self._stream(f'transactions/stream',
-                                Transaction,
+                                params=params,
                                 *args,
                                 **kwargs)
 
