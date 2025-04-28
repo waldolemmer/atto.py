@@ -18,7 +18,9 @@ from .Block import Block
 
 class Transaction:
     # TODO: docstring
-    def __init__(self, dict_):
+    def __init__(self, dict_, client):
+        self._client = client
+
         self.block = Block(dict_['block'])
         self.signature = dict_['signature']
         self.work = dict_['work']

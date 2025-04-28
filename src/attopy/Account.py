@@ -18,7 +18,9 @@ from .convert import (_str_to_network, _str_to_algorithm, _raw_to_atto,
                       _timestamp_to_datetime)
 class Account:
     # TODO: docstring
-    def __init__(self, dict_):
+    def __init__(self, dict_, client):
+        self._client = client
+
         self.public_key = dict_['publicKey']
         self.network = _str_to_network(dict_['network'])
         self.version = dict_['version']
@@ -31,3 +33,11 @@ class Account:
         self.representative_algorithm = _str_to_algorithm(
                 dict_['representativeAlgorithm'])
         self.representative_public_key = dict_['representativePublicKey']
+
+    def get(self, *args, **kwargs):
+        return client.account(account=self.public_key, *args, stream=False,
+                              **kwargs)
+
+    def stream(self, *args, **kwargs):
+        yield from client.account(account=self.public_key, *args, stream=True,
+                                  **kwargs)

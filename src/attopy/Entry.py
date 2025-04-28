@@ -19,7 +19,9 @@ from .convert import (_str_to_algorithm, _str_to_block_type, _raw_to_atto,
 
 class Entry:
     # TODO: docstring
-    def __init__(self, dict_):
+    def __init__(self, dict_, client):
+        self._client = client
+
         self.hash_ = dict_['hash']
         self.algorithm = _str_to_algorithm(dict_['algorithm'])
         self.public_key = dict_['publicKey']
@@ -31,3 +33,6 @@ class Entry:
         self.balance = _raw_to_atto(dict_['balance'])
         self.amount = self.balance - self.previous_balance
         self.timestamp = _timestamp_to_datetime(dict_['timestamp'])
+
+    def stream(self, *args, **kwargs):
+        yield from client.entry(self.hash_, *args, stream=True, **kwargs)
