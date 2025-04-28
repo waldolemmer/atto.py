@@ -2,6 +2,12 @@
 Changelog
 =========
 
+Version 0.6.0
+=============
+
+* feat: add Account.{get,stream}()
+* feat: add Entry.stream()
+
 Version 0.5.0
 =============
 
