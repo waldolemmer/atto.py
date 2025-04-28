@@ -33,3 +33,6 @@ class Entry:
         self.balance = _raw_to_atto(dict_['balance'])
         self.amount = self.balance - self.previous_balance
         self.timestamp = _timestamp_to_datetime(dict_['timestamp'])
+
+    def stream(self, *args, **kwargs):
+        yield from client.entry(self.hash_, *args, stream=True, **kwargs)
