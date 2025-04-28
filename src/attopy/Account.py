@@ -33,3 +33,11 @@ class Account:
         self.representative_algorithm = _str_to_algorithm(
                 dict_['representativeAlgorithm'])
         self.representative_public_key = dict_['representativePublicKey']
+
+    def get(self, *args, **kwargs):
+        return client.account(account=self.public_key, *args, stream=False,
+                              **kwargs)
+
+    def stream(self, *args, **kwargs):
+        yield from client.account(account=self.public_key, *args, stream=True,
+                                  **kwargs)
