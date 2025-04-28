@@ -19,7 +19,9 @@ from .convert import (_str_to_algorithm, _str_to_block_type, _raw_to_atto,
 
 class Entry:
     # TODO: docstring
-    def __init__(self, dict_):
+    def __init__(self, dict_, client):
+        self._client = client
+
         self.hash_ = dict_['hash']
         self.algorithm = _str_to_algorithm(dict_['algorithm'])
         self.public_key = dict_['publicKey']

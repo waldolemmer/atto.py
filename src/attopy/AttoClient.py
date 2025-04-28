@@ -113,7 +113,7 @@ class AttoClient:
         public_key = _account_to_key(account)
 
         if not stream:
-            return Account(self._get_json(f'/accounts/{public_key}'))
+            return Account(self._get_json(f'/accounts/{public_key}'), self)
 
         yield from self._stream(f'accounts/{public_key}/stream',
                                 Account,
@@ -146,7 +146,7 @@ class AttoClient:
 
 #    TODO: not supported by gatekeeper node; can't test
 #    def get_transaction(self, hash_):
-#        return Transaction(self._get_json(f'/transactions/{hash_}'))
+#        return Transaction(self._get_json(f'/transactions/{hash_}'), self)
 
 #    TODO: not supported by gatekeeper node; can't test
 #    def latest_accounts_stream(self, public_key, *args, **kwargs):
@@ -156,7 +156,7 @@ class AttoClient:
 #                                 *args,
 #                                 **kwargs) as stream:
 #            for line in stream.iter_lines():
-#                yield Account(json.loads(line))
+#                yield Account(json.loads(line), self)
 
     def receivables(self, account, *args, min_amount=1, stream=True, **kwargs):
         # TODO: docstring
@@ -234,4 +234,4 @@ class AttoClient:
         """Yield a type_ constructed from the next line at url"""
         with self._client.stream('get', url, *args, **kwargs) as stream:
             for line in stream.iter_lines():
-                yield type_(json.loads(line))
+                yield type_(json.loads(line), self)

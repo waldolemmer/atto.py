@@ -19,7 +19,7 @@ from .convert import _str_to_algorithm, _timestamp_to_datetime, _raw_to_atto
 
 class Receivable:
     # TODO: docstring
-    def __init__(self, dict_):
+    def __init__(self, dict_, client):
         self.hash_ = dict_['hash']
         self.version = dict_['version']
         self.algorithm = _str_to_algorithm(dict_['algorithm'])
