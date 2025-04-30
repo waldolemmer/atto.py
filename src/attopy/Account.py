@@ -41,3 +41,6 @@ class Account:
     def stream(self, *args, **kwargs):
         yield from client.account(account=self.public_key, *args, stream=True,
                                   **kwargs)
+
+    def __repr__(self):
+        return f'<Account {self.public_key[0:6]}... {self.height}>'
