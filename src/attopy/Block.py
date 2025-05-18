@@ -34,3 +34,6 @@ class Block:
             self.representative_algorithm = _str_to_algorithm(
                     self.representative_algorithm)
         self.representative_public_key = dict_.get('representativePublicKey', None)
+
+    def __repr__(self):
+        return f'<Block {self.public_key[0:6]}... {self.height}>'
