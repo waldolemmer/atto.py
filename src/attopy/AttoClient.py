@@ -94,6 +94,9 @@ class AttoClient:
             server_instant: any
             difference: any
 
+            def __repr__(self):
+                return f'<Instants {server_instant.isoformat()}>'
+
         instants = self._get_json(f'instants/{instant}')
         client_instant = datetime.datetime.fromisoformat(instants['clientInstant'])
         server_instant = datetime.datetime.fromisoformat(instants['serverInstant'])
