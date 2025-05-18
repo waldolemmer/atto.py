@@ -28,3 +28,6 @@ class Receivable:
         self.receiver_algorithm = _str_to_algorithm(dict_['receiverAlgorithm'])
         self.receiver_public_key = dict_['receiverPublicKey']
         self.amount = _raw_to_atto(dict_['amount'])
+
+    def __repr__(self):
+        return f'<Receivable {self.hash_[0:6]}...>'
