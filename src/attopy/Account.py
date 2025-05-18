@@ -41,3 +41,17 @@ class Account:
     def stream(self, *args, **kwargs):
         yield from client.account(account=self.public_key, *args, stream=True,
                                   **kwargs)
+
+    def entries(self, *args, from_=None, to=None, stream=True, **kwargs):
+        return self._client.entries(account=self, *args, from_=from_, to=to,
+                                    stream=stream, **kwargs)
+
+    def receivables(self, *args, min_amount=1, stream=True, **kwargs):
+        return self._client.receivables(account=self, *args,
+                                        min_amount=min_amount, stream=stream,
+                                        **kwargs)
+
+    def transactions(self, account=None, *args, from_=None, to=None,
+                     stream=True, **kwargs):
+        return self._client.transactions(account=self, *args, from_=from_,
+                                         to=to, stream=stream, **kwargs)
