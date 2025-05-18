@@ -2,7 +2,14 @@
 Changelog
 =========
 
+Version 0.7.0
 =============
+
+* feat: add Account.entries(), Account.receivables() and
+  Account.transactions(), which are equivalent to AttoClient.entries(account),
+  AttoClient.receivables(account) and AttoClient.transactions(account),
+  respectively.
+
 Version 0.6.1
 =============
 
