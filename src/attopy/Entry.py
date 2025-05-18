@@ -36,3 +36,6 @@ class Entry:
 
     def stream(self, *args, **kwargs):
         yield from client.entry(self.hash_, *args, stream=True, **kwargs)
+
+    def __repr__(self):
+        return f'<Entry {self.hash_[0:6]}...>'
