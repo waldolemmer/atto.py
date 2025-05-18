@@ -2,6 +2,13 @@
 Changelog
 =========
 
+=============
+Version 0.6.1
+=============
+
+* fix: AttoClient.account() now returns an Account object instead of a
+  generator when stream=False
+
 Version 0.6.0
 =============
 
