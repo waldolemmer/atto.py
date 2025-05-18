@@ -2,6 +2,20 @@
 Changelog
 =========
 
+Version 0.7.0
+=============
+
+* feat: add Account.entries(), Account.receivables() and
+  Account.transactions(), which are equivalent to AttoClient.entries(account),
+  AttoClient.receivables(account) and AttoClient.transactions(account),
+  respectively.
+
+Version 0.6.1
+=============
+
+* fix: AttoClient.account() now returns an Account object instead of a
+  generator when stream=False
+
 Version 0.6.0
 =============
 

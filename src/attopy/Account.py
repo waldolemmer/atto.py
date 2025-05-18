@@ -42,5 +42,19 @@ class Account:
         yield from client.account(account=self.public_key, *args, stream=True,
                                   **kwargs)
 
+    def entries(self, *args, from_=None, to=None, stream=True, **kwargs):
+        return self._client.entries(account=self, *args, from_=from_, to=to,
+                                    stream=stream, **kwargs)
+
+    def receivables(self, *args, min_amount=1, stream=True, **kwargs):
+        return self._client.receivables(account=self, *args,
+                                        min_amount=min_amount, stream=stream,
+                                        **kwargs)
+
+    def transactions(self, account=None, *args, from_=None, to=None,
+                     stream=True, **kwargs):
+        return self._client.transactions(account=self, *args, from_=from_,
+                                         to=to, stream=stream, **kwargs)
+
     def __repr__(self):
         return f'<Account {self.public_key[0:6]}... {self.height}>'

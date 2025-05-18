@@ -117,10 +117,10 @@ class AttoClient:
         if not stream:
             return Account(self._get_json(f'/accounts/{public_key}'), self)
 
-        yield from self._stream(f'accounts/{public_key}/stream',
-                                Account,
-                                *args,
-                                **kwargs)
+        return self._stream(f'accounts/{public_key}/stream',
+                            Account,
+                            *args,
+                            **kwargs)
 
     # stream=False because "entry" is singular, and singular methods aren't
     # streamed by default
