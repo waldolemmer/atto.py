@@ -18,6 +18,7 @@ from .Transaction import Transaction
 from .Receivable import Receivable
 from .Entry import Entry
 from .convert import address_to_key
+from .boilerplate import _repr
 import httpx
 import datetime
 import dataclasses
@@ -37,6 +38,7 @@ def _account_to_key(account):
 
     return address_to_key(account)
 
+_DEFAULT_BASE_URL = 'https://h.tail006b6.ts.net/api'
 class AttoClient:
     """A synchronous connection to an Atto Node.
 
@@ -61,7 +63,7 @@ class AttoClient:
     Attributes:
         base_url: the node API's base URL
     """
-    def __init__(self, base_url='https://h.tail006b6.ts.net/api', **kwargs):
+    def __init__(self, base_url=_DEFAULT_BASE_URL, **kwargs):
         """Create a synchronous client with a connection to a node.
 
         Args:
@@ -91,6 +93,12 @@ class AttoClient:
             client_instant: any
             server_instant: any
             difference: any
+
+            def __repr__(self):
+                return f'<Instants {server_instant.isoformat()}>'
+
+            def __str__(self):
+                return f'{self.difference.microseconds/1000000:6>,.3f} seconds {"ahead " if self.difference.total_seconds() < 0 else "behind"}'
 
         instants = self._get_json(f'instants/{instant}')
         client_instant = datetime.datetime.fromisoformat(instants['clientInstant'])
@@ -218,6 +226,9 @@ class AttoClient:
         exiting the context.
         """
         self._client.close()
+
+    def __repr__(self):
+        return _repr(self)
 
     def __enter__(self):
         return self

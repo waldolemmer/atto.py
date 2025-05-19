@@ -2,6 +2,26 @@
 Changelog
 =========
 
+Version 0.8.0
+=============
+
+* feat: The following functions now have custom .__repr__() methods:
+  * AttoClient
+  * Account
+  * Block
+  * Entry
+  * Instants
+  * Receivable
+  * Transaction
+* feat: The following functions now convert nicely to strings and are displayed
+  in table format when printed with print():
+  * Account
+  * Block
+  * Entry
+  * Instants
+  * Receivable
+  * Transaction
+
 Version 0.7.0
 =============
 

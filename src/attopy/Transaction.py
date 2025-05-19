@@ -24,3 +24,9 @@ class Transaction:
         self.block = Block(dict_['block'])
         self.signature = dict_['signature']
         self.work = dict_['work']
+
+    def __repr__(self):
+        return f'<Transaction {self.block.public_key[0:6]}... {self.block.height}>'
+
+    def __str__(self):
+        return str(self.block)
