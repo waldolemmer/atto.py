@@ -16,6 +16,7 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 """
 from .convert import (_str_to_algorithm, _str_to_block_type, _raw_to_atto,
                       _timestamp_to_datetime)
+from . import _format
 
 class Entry:
     # TODO: docstring
@@ -39,3 +40,12 @@ class Entry:
 
     def __repr__(self):
         return f'<Entry {self.hash_[0:6]}...>'
+
+    def __str__(self):
+        return (f'{_format.hash(self.hash_)} '
+                f'{_format.block_type(self.block_type)}'
+                f'{_format.amount(self.amount)} '
+                f'{_format.pub_key(self.subjectPublicKey if self.amount > 0 else self.public_key)} '
+                f'{_format.pub_key(self.public_key if self.amount > 0 else self.subjectPublicKey)} '
+                f'{_format.height(self.height)} @ '
+                f'{_format.timestamp(self.timestamp)}')
