@@ -135,10 +135,10 @@ class AttoClient:
         if not stream:
             raise ValueError(f'{stream=}')
 
-        yield from self._stream(f'accounts/entries/{hash_}/stream',
-                                Entry,
-                                *args,
-                                **kwargs)
+        return self._stream(f'accounts/entries/{hash_}/stream',
+                            Entry,
+                            *args,
+                            **kwargs)
 
     # stream=False because "transaction" is singular, and singular methods aren't
     # streamed by default
@@ -147,10 +147,10 @@ class AttoClient:
         if not stream:
             raise ValueError(f'{stream=}')
 
-        yield from self._stream(f'transactions/{hash_}/stream',
-                                Transaction,
-                                *args,
-                                **kwargs)
+        return self._stream(f'transactions/{hash_}/stream',
+                            Transaction,
+                            *args,
+                            **kwargs)
 
 #    TODO: not supported by gatekeeper node; can't test
 #    def get_transaction(self, hash_):
@@ -172,11 +172,10 @@ class AttoClient:
             raise ValueError(f'{stream=}')
 
         public_key = _account_to_key(account)
-        yield from self._stream(f'accounts/{public_key}/receivables/stream',
-                                Receivable,
-                                *args,
-                                **kwargs)
-    def entries(self, account=None, *args, from_=None, to=None, stream=True,
+        return self._stream(f'accounts/{public_key}/receivables/stream',
+                            Receivable, *args, **kwargs)
+
+    def entries(self, account=None, *args, from_=None, to=4294967295, stream=True,
                 **kwargs):
         # TODO: docstring
         if not stream:
@@ -193,11 +192,7 @@ class AttoClient:
             endpoint = f'accounts/{_account_to_key(account)}/entries/stream'
             params = {'fromHeight': from_, 'toHeight': to}
 
-        yield from self._stream(endpoint,
-                                Entry,
-                                params=params,
-                                *args,
-                                **kwargs)
+        return self._stream(endpoint, Entry, params=params, *args, **kwargs)
 
     def transactions(self, account=None, *args, from_=None, to=None,
                      stream=True, **kwargs):
@@ -213,11 +208,8 @@ class AttoClient:
             endpoint = f'accounts/{public_key}/transactions/stream'
             params = {'fromHeight': from_, 'toHeight': to}
 
-        yield from self._stream(endpoint,
-                                Transaction,
-                                params=params,
-                                *args,
-                                **kwargs)
+        return self._stream(endpoint, Transaction, params=params, *args,
+                            **kwargs)
 
     def close(self):
         """Close the client connection.
