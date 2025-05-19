@@ -61,25 +61,35 @@ Typical usage example:
     
     ADDRESS = '<your_address>'
     
-    with AttoClient() as node:
-        account = node.get_account(ADDRESS)
-        print(f'balance: {account.balance}')
+    with AttoClient('http://h:8080') as node:
+        print('Account:')
+        account = node.account(ADDRESS)
+        print(account)
+        print()
     
-        # print first 100 transactions
-        print('Hash\tAmount')
-        for entry in node.entries_stream(account, from_=1, to=10, timeout=None):
-            print(f'{entry.hash_[0:4]}...\t{entry.amount}')
+        COUNT = 10
+        print(f'First {COUNT} entries:')
+        for entry in account.entries(to=COUNT):
+            print(entry)
 
 Example output:
 
 .. code-block:: text
 
-    balance: 1349500000
-    hash        Amount
-    A5DF...     10000000
-    BEEF...     49000000000
-    DEAD...     2500000000
-    ... 7 more lines ...
+    Account:
+    FF9DA..E37D:     2,665,633.1703     #93
+    
+    First 10 entries:
+    03E9.. O           10.0000 ECC0E..99EA FF9DA..E37D      #1 @ 20250415 18:03
+    2B82.. +           10.0000 ECC0E..99EA FF9DA..E37D      #2 @ 20250415 18:03
+    04D3.. +           10.0000 ECC0E..99EA FF9DA..E37D      #3 @ 20250415 18:05
+    5DF6.. +           10.0000 ECC0E..99EA FF9DA..E37D      #4 @ 20250415 18:06
+    7AB1.. +           10.0000 ECC0E..99EA FF9DA..E37D      #5 @ 20250415 18:07
+    1D46.. +           10.0000 ECC0E..99EA FF9DA..E37D      #6 @ 20250415 18:39
+    A710.. +           10.0000 ECC0E..99EA FF9DA..E37D      #7 @ 20250415 18:47
+    EE78.. +           10.0000 ECC0E..99EA FF9DA..E37D      #8 @ 20250415 18:49
+    E911.. +           10.0000 ECC0E..99EA FF9DA..E37D      #9 @ 20250415 18:50
+    C435.. +           10.0000 ECC0E..99EA FF9DA..E37D     #10 @ 20250415 18:52
 
 .. _Atto: https://atto.cash/
 
