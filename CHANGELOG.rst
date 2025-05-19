@@ -2,6 +2,18 @@
 Changelog
 =========
 
+Version 0.9.0
+=============
+
+* feat: Throw ValueError immediately when a method is incorrectly called with
+  stream=False, rather than waiting for the generator to be iterated once.
+  Affected methods:
+  * AttoClient.entry()
+  * AttoClient.transaction()
+  * AttoClient.receivables()
+  * AttoClient.entries()
+  * AttoClient.transactions()
+
 Version 0.8.2
 =============
 
