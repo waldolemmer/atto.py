@@ -16,6 +16,7 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 """
 from .convert import (_str_to_algorithm, _timestamp_to_datetime,
                       _str_to_network, _raw_to_atto, _str_to_block_type)
+from . import _format
 
 class Block:
     # TODO: docstring
@@ -37,3 +38,10 @@ class Block:
 
     def __repr__(self):
         return f'<Block {self.public_key[0:6]}... {self.height}>'
+
+    def __str__(self):
+        return (f'{_format.block_type(self.type)} '
+                f'{_format.balance(self.balance)} '
+                f'{_format.pub_key(self.public_key)}'
+                f'{_format.height(self.height)} @ '
+                f'{_format.timestamp(self.timestamp)}')
