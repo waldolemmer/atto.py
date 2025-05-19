@@ -27,3 +27,6 @@ class Transaction:
 
     def __repr__(self):
         return f'<Transaction {self.block.public_key[0:6]}... {self.block.height}>'
+
+    def __str__(self):
+        return str(self.block)
