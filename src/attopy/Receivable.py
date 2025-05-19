@@ -16,6 +16,7 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 """
 import datetime
 from .convert import _str_to_algorithm, _timestamp_to_datetime, _raw_to_atto
+from . import _format
 
 class Receivable:
     # TODO: docstring
@@ -31,3 +32,11 @@ class Receivable:
 
     def __repr__(self):
         return f'<Receivable {self.hash_[0:6]}...>'
+
+    def __str__(self):
+        return (f'{_format.hash(self.hash_)} '
+                f'{_format.block_type("RECEIVE")}'
+                f'{_format.amount(self.amount)} '
+                f'{_format.pub_key(self.public_key)} '
+                f'{_format.pub_key(self.receiver_public_key)} @ '
+                f'{_format.timestamp(self.timestamp)}')
