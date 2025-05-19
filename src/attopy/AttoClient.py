@@ -97,6 +97,9 @@ class AttoClient:
             def __repr__(self):
                 return f'<Instants {server_instant.isoformat()}>'
 
+            def __str__(self):
+                return f'{self.difference.microseconds/1000000:6>,.3f} seconds {"ahead " if self.difference.total_seconds() < 0 else "behind"}'
+
         instants = self._get_json(f'instants/{instant}')
         client_instant = datetime.datetime.fromisoformat(instants['clientInstant'])
         server_instant = datetime.datetime.fromisoformat(instants['serverInstant'])
