@@ -109,7 +109,7 @@ class AttoClient:
                         server_instant=server_instant,
                         difference=difference)
     
-    def account(self, account, stream=False):
+    def account(self, account, *args, stream=False, **kwargs):
         """Return an up-to-date Account object
 
         Args:
