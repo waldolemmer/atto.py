@@ -2,6 +2,11 @@
 Changelog
 =========
 
+Version 0.8.1
+=============
+
+* fix: Fix undefined 'client' variable in Account.stream()
+
 Version 0.8.0
 =============
 

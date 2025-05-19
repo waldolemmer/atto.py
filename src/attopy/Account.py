@@ -41,8 +41,8 @@ class Account:
                               **kwargs)
 
     def stream(self, *args, **kwargs):
-        yield from client.account(account=self.public_key, *args, stream=True,
-                                  **kwargs)
+        yield from self._client.account(account=self.public_key, *args,
+                                        stream=True, **kwargs)
 
     def entries(self, *args, from_=None, to=None, stream=True, **kwargs):
         return self._client.entries(account=self, *args, from_=from_, to=to,
