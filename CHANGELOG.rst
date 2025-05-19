@@ -2,6 +2,11 @@
 Changelog
 =========
 
+Version 0.8.2
+=============
+
+* fix: Accept httpx arguments such as timeout in AttoClient.account()
+
 Version 0.8.1
 =============
 
